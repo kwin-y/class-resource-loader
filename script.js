@@ -29,3 +29,26 @@ function makeCounter() {
 //2 independent counters
 const attemptCounter = makeCounter();
 const responseCounter = makeCounter();
+
+//Resource class - parent class
+class Resource {
+    constructor(title){
+        this.title = title;
+    }
+
+    describe() {
+        return this.title;
+    }
+}
+
+//Timed Resource class - child class
+class TimedResource extends Resource {
+    constructor(title, minutes){
+        super(title);
+        this.minutes = minutes;
+    }
+
+    describe() {
+        return `${super.describe()} | ${this.minutes} min`;
+    }
+}
