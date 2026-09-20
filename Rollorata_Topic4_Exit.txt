@@ -1,0 +1,24 @@
+ITE 18 – Topic 3
+Class Resource Loader Activity
+
+Individual Exit Responses
+
+1. Which variable is retained by the counter closure, and why does its value survive between accepted requests?
+
+The `count` variable inside `makeCounter()` is retained by the returned closure. It survives between calls because the returned function keeps access to the local variable even after `makeCounter()` has finished. That's why in my program, separate closures are created for `attemptsCounter` and `responseCounter`.
+
+2. Why do B and C appear before D in the execution trace?
+
+B appears before C because B is logged synchronously before the handler reaches `await`. Since C is a Promise microtask, so it is processed after the current synchronous code finishes. While D is a timer task, so it runs after the microtask.
+
+3. What exactly pauses at await, and what can still happen while the request is pending?
+
+The `await` pauses the execution of the async submit handler until `requestResources()` settles. This results as to why it does not freeze the entire page. Because in this program, the Test page response button can still be clicked while the resource request is pending.
+
+4. How do catch and finally differ when a request fails?
+
+The `catch` block handles the rejected request and displays the error message while keeping the resource list empty. While the `finally` block performs cleanup regardless of whether the request succeeds or fails. Because in this program, `finally` resets `busy` and enables the Load resources button again.
+
+5. What do extends, super(title), and super.describe() each contribute to TimedResource?
+
+The `extends` makes `TimedResource` inherit from `Resource`. So, the `super(title)` calls the parent constructor so that the title is initialized. While `super.describe()` calls the parent method so that `TimedResource` can reuse the title and add the number of minutes to the returned label.

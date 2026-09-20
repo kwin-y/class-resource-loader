@@ -127,5 +127,9 @@ form.addEventListener("submit", async function (event) { //whenever form is subm
         loadButton.disabled = false;
             log("F: cleanup");
     }
+});
 
+//click listener - test page response button
+pingButton.addEventListener("click", function () {
+    pingsDisplay.textContent = responseCounter();
 });

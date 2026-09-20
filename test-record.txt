@@ -1,0 +1,19 @@
+ITE 18 – Topic 3
+Class Resource Loader Activity
+
+Test Record
+
+| Test | Actual Result                                                                                                                                         | Pass or Fail | Correction Attempted |
+| ---- | ----------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | -------------------- |
+| T1   | Page loaded with Ready, Attempts 0, Response clicks 0, empty resource list, and empty execution trace.                                                | Pass         | None                 |
+| T2   | Submitting with failure unchecked showed Loading immediately, Attempts 1, disabled Load button, and cleared the resource list.                        | Pass         | None                 |
+| T3   | Clicking Test page response twice while loading changed Response clicks to 2 while Attempts remained 1.                                               | Pass         | None                 |
+| T4   | Successful request displayed the three required resources in order, Loaded 3 resources, enabled the button, and produced A B C D E F with E success.  | Pass         | None                 |
+| T5   | Second successful request increased Attempts to 2 and displayed only one set of three resource rows.                                                  | Pass         | None                 |
+| T6   | Checking failure and submitting increased Attempts to 3, cleared the list, displayed the failure message, and re-enabled the button.                  | Pass         | None                 |
+| T7   | Unchecking failure and submitting increased Attempts to 4 and successfully recovered with the three resources.                                        | Pass         | None                 |
+| T8   | Starting with failure unchecked and checking it during loading still resulted in success because the mode was captured when the request was accepted. | Pass         | None                 |
+| T9   | Rapidly double-clicking Load resources accepted only one new request. Attempts reached 6 and one final set of three resources appeared.               | Pass         | None                 |
+| T10  | Reloading the page reset the counters and results to the initial T1 state.                                                                            | Pass         | None                 |
+
+Overall Test Result: All T1–T10 passed.

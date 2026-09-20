@@ -1,0 +1,118 @@
+ITE 18 – Topic 3
+Class Resource Loader Activity
+
+--- Predictions A to C
+
+A. Event Registration
+    function greet() { console.log("Hello"); }
+    button.addEventListener("click", greet());
+    
+    Assume button refers to a valid HTML button. When does Hello appear? Does a later click call greet through
+    this registration? Rewrite the final line correctly.
+
+- Hello appears immediately when `greet()` is called because `greet()` is being executed while the event listener is being registered. While the next click does not call `greet` through this registration because the result of `greet()` was passed instead of the function itself. 
+So, the correct registration is:
+    button.addEventListener("click", greet);
+
+B. Independent Closures
+    function makeCounter() {
+        let n = 0;
+    return () => ++n;
+    }
+    const a = makeCounter();
+    const b = makeCounter();
+    console.log(a(), a(), b(), a());
+
+    Predict all four values. Explain why the third value is different from the second.
+
+The output is:
+
+1 2 1 3
+
+The third value is different from the second because `a` and `b` are separate closures. 
+Since, each call to `makeCounter()` creates its own local `n` starting at 0, therefore, `a()` has its own count and `b()` has a separate count.
+
+C. Event Loop Order
+    console.log("A");
+    setTimeout(() => console.log("D"), 0);
+    Promise.resolve().then(() => console.log("C"));
+    console.log("B");
+
+Predict the complete output order. Identify the synchronous logs, the promise microtask, and the timer task.
+Explain why zero delay does not mean immediate execution.
+
+The complete output order is:
+
+A
+B
+C
+D
+
+A and B are synchronous logs. C is a Promise microtask, while D is a timer task. A zero-delay timer does not run immediately because it is scheduled as a task and must wait until the current synchronous code and pending microtasks have been processed.
+
+--- Predictions D to F 
+
+D. Promise Chaining
+    Promise.resolve(3)
+        .then(n => { n * 2; })
+        .then(value => console.log(value));
+
+    Predict the logged value. Repair the first handler so the second one receives 6. Explain the role of return.
+
+The logged value is undefined.
+The first handler does not return `n * 2`, so the next `.then()` receives `undefined`. 
+To make the second handler receive 6, the first handler should be:
+
+    .then(n => { return n * 2;})
+
+This way, the `return` will now pass the value to the next Promise handler.
+
+E. Rejection and Cleanup
+    async function test() {
+        try {
+        await Promise.reject(new Error("Offline"));
+        console.log("success");
+        } catch (error) {
+        console.log(error.message);
+        } finally {
+        console.log("cleanup");
+        }
+    }
+    test();
+    console.log("outside");
+
+    Predict the complete output order. Does success appear? Explain why the statement outside the async
+    function can execute first.
+
+The complete output order is:
+
+outside
+Offline
+cleanup
+
+The `success` message does not appear because the Promise is rejected and execution moves to the `catch` block. That's why `outside` statement can execute first because calling an async function starts its asynchronous operation, while the code outside the async function continues executing.
+
+F. Class Inheritance
+    class Resource {
+        constructor(title) { this.title = title; }
+    }
+    class TimedResource extends Resource {
+        constructor(title, minutes) {
+        this.minutes = minutes;
+        super(title);
+        }
+    }
+    new TimedResource("Events", 15);
+
+    What happens when the instance is constructed? Correct the order of the two constructor statements and
+    explain why that order matters.
+
+Constructing the instance causes an error because `this` cannot be used in the child constructor before `super()` has been called. 
+So, the correct order is:
+
+constructor(title, minutes) {
+super(title);
+this.minutes = minutes;
+}
+
+`super(title)` must run first because it initializes the parent class portion of the object before the child constructor uses `this`.
